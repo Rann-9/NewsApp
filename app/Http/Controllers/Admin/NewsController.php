@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+
+
 use App\Models\News;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -17,8 +19,18 @@ class NewsController extends Controller
      */
     public function index()
     {
+        // title untuk memberikan judul halaman
         $title = 'Index News';
-        return view('home.news.index', compact('title'));
+
+        // get data terbaru dari table news/dari model news
+        $news = News::latest()->paginate(5);
+        $category = Category::all();
+        // compact berfungsi untuk mengirimkan data ke views
+        return view('home.news.index', compact(
+            'title',
+            'news',
+            'category'
+        ));
     }
 
     /**
@@ -30,9 +42,7 @@ class NewsController extends Controller
     {
         $title = 'Create News';
         $category = Category::all();
-        return view('home.news.create', compact('title', 'category'));
-
-
+        return view('home.news.create', compact('title', 'news', 'category'));
     }
 
     /**
@@ -43,28 +53,27 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+        //validate
+        $this->validate($request, [
+            'title' => 'required|min:1|max:100',
             'content' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:3999'
         ]);
-
-        // upload image
+        // upload img
         $image = $request->file('image');
-        // fungsi untuk menyimpan image
-        // fungsi hashName() berfungsi untuk memberikan nama acak pada image
+        //kedalam folder public/news
+        // fungsi hasName bikin random nama file
         $image->storeAs('public/news', $image->hashName());
-        // create data ke dalam table news
+        //create data kedalam table news
         News::create([
-            'category_id' => $request->category_id,
             'title' => $request->title,
+            'content' => $request->content,
+            'category_id' => $request->category_id,
+            'image' => $image->hashName(),
             'slug' => Str::slug($request->title),
-            'image'  => $image->hashName(),
-            'content' => $request->content
         ]);
-
-        return redirect()->route('news.index')->with('success', 'News Berhasil Ditambahkan');
+        return redirect()->route('news.index')->with('success', 'Mantap Berita Berhasil Di Tambahkan! 👍');
     }
 
     /**

@@ -28,7 +28,7 @@ class News extends Model
     // Accessor Image News
     public function image() : Attribute {
         return Attribute::make(
-            get: fn($value) => asset('/storage/category/' . $value)
+            get: fn($value) => asset('/storage/news/' . $value)
         );
     }
 }
