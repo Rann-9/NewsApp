@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\NewsController;
-use GuzzleHttp\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +22,23 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
+// Auth::routes();
 
-// Route for News using Resource
+// Route::match(['get','post'], '/register', function(){
+//     return redirect('/login');   
+// });
+
+
+
 Route::resource('news', NewsController::class);
-// Route for Categiry using Resource
-Route::resource('category', CategoryController::class);
+
+//route middleware
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    // route for admin
+    Route::middleware(['auth', 'admin'])->group(function(){
+        Route::resource('category', CategoryController::class)->middleware('auth');
+    });
+});

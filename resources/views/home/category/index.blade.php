@@ -31,15 +31,26 @@
                                         <td>{{ $row->slug }}</td>
                                         <td><img src="{{ $row->image }}" alt="" width="100px"></td>
                                         <td>
-                                            {{-- show using modal with id {{ $row->id }} --}}
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#basicModal{{ $row->id }}">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            @include('home.category.includes.modal-show')
+                                            <div class="inline d-flex gap-2">
+                                                {{-- show using modal with id {{ $row->id }} --}}
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#basicModal{{ $row->id }}">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                @include('home.category.includes.modal-show')
 
-                                            {{-- button edit with route category.edit {{ $row->id }} --}}
-                                            <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+                                                {{-- button edit with route category.edit {{ $row->id }} --}}
+                                                <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning"><i
+                                                        class="bi bi-pencil-square"></i></a>
+
+                                                {{-- delete button with route category.destroy {{ row->id }} --}}
+                                                <form action="{{ route('category.destroy', $row->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger inline"><i
+                                                            class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

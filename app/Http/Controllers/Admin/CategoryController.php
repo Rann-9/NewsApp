@@ -158,13 +158,21 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        // $category =  Category::findOrFail($id);
-        // if (
-        //     $category->delete()
-        // ) {
-        //     return redirect()->route('category.index')->with(['success' => 'Data Berhasil Dihapus']);
-        // } else {
-        //     return redirect()->route('category.index')->with(['errors' => 'Data Gagal Dihapus']);
-        // }
+        // get data by id
+        $category =  Category::findOrFail($id);
+        
+        // delete image
+        // basename berfungsi untuk mengambil nama file
+        Storage::disk('local')->delete('public/category/' . basename($category->image));
+
+        // delete data by id
+        if (
+            $category->delete()
+        ) {
+            return redirect()->route('category.index')->with('success', 'Category Berhasil Dihapus');
+        } else {
+            return redirect()->route('category.destroy')->with('errors', 'Category Gagal Dihapus');
+        }
+        
     }
 }
