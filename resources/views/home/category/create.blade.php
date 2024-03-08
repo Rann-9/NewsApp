@@ -5,6 +5,16 @@
         <div class="card p-4">
             <h3>Create Category</h3>
 
+            @if ($errors)
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all( ) as $row)
+                            <li>{{ $row }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('POST')

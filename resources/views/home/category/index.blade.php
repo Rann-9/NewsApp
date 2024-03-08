@@ -4,6 +4,13 @@
     <div class="row">
         <div class="card p-4">
             <h3>Category Index</h3>
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('succes') }}
+                </div>
+            @endif
+
             <div class="d-flex justify-content-end">
                 <a href="{{ route('category.create') }}" class="btn btn-primary"><i class="bi bi-plus"></i>Create Category</a>
             </div>

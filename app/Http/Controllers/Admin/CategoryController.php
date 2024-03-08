@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $title = 'Category - Index';
+        $title = 'Category - Create';
         return view('home.category.create', compact(
             'title'
         ));

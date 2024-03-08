@@ -20,7 +20,7 @@ class NewsController extends Controller
     public function index()
     {
         // title untuk memberikan judul halaman
-        $title = 'Index News';
+        $title = 'News - Index';
 
         // get data terbaru dari table news/dari model news
         $news = News::latest()->paginate(5);
@@ -40,9 +40,12 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $title = 'Create News';
+        $title = 'News - Create';
         $category = Category::all();
-        return view('home.news.create', compact('title', 'news', 'category'));
+        return view('home.news.create', compact(
+            'title',
+            'category'
+        ));
     }
 
     /**
@@ -66,14 +69,20 @@ class NewsController extends Controller
         // fungsi hasName bikin random nama file
         $image->storeAs('public/news', $image->hashName());
         //create data kedalam table news
-        News::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'category_id' => $request->category_id,
-            'image' => $image->hashName(),
-            'slug' => Str::slug($request->title),
-        ]);
-        return redirect()->route('news.index')->with('success', 'Mantap Berita Berhasil Di Tambahkan! 👍');
+        if (
+            News::create([
+                'title' => $request->title,
+                'content' => $request->content,
+                'category_id' => $request->category_id,
+                'image' => $image->hashName(),
+                'slug' => Str::slug($request->title),
+            ])
+        ) {
+            return redirect()->route('news.index')->with('success', 'Berita Berhasil Di Tambahkan');
+        } else {
+            return redirect()->route('news.index')->with('errors', 'Berita Gagal Di Tambahkan');
+        }
+        
     }
 
     /**
@@ -84,7 +93,14 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        //
+        $title = 'News - Show';
+        // get data by id using model News
+        // fungsi dari finOrFail adalah jika data tidak ditemukan maka akan menampilkan eror 404
+        $news = News::findOrFail($id);
+        return view('home.news.show', compact(
+            'title',
+            'news'
+        ));
     }
 
     /**
@@ -95,7 +111,16 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        // get data by id
+        $title = 'News - Edit';
+        $news = News::findOrFail($id);
+        $category = Category::all();
+        return view('home.news.edit', compact(
+            'title',
+            'category',
+            'news'
+        ));
+
     }
 
     /**

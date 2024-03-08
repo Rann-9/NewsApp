@@ -48,6 +48,7 @@
 
     <main id="main" class="main">
         @yield('content')
+        
     </main><!-- End #main -->
 
     @include('home.includes.footer')
@@ -67,7 +68,7 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
-    
+
 
 </body>
 

@@ -3,13 +3,13 @@
 @section('content')
     <div class="row">
         <div class="card p-4">
-            <h3>News Create</h3>
-            <form action="{{ route('news.store') }}" method="post" enctype="multipart/form-data">
+            <h3>News Edit</h3>
+            <form action="{{ route('news.update', $news->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
-                @method('POST')
+                @method('PUT')
                 <div class="mb-2">
                     <label for="inputTitle" class="form-label">News title</label>
-                    <input type="text" class="form-control" id="inputTitle" name="title" value="{{ old('title') }}">
+                    <input type="text" class="form-control" id="inputTitle" name="title" value="{{ $news->title }}">
 
                     <label for="inputImage" class="form-label">News Image</label>
                     <input type="file" class="form-control" id="inputImage" name="image" value="{{ old('title') }}">
@@ -18,7 +18,8 @@
 
                 <div class="cols">
                     <select name="category_id" class="form-select" aria-label="Default select example">
-                        <option selected>Choose Category</option>
+                        <option selected value="{{ $news->category->id }}">{{ $news->category->name }}</option>
+                        <option>Choose Category</option>
                         @foreach ( $category as $row)
                         <option value="{{ $row->id }}">{{ $row->name }}</option>
                         @endforeach
@@ -27,9 +28,21 @@
                 </div>
                 <div class="mb-2">
                     <label for="inputTitle" class="form-label">Content News</label>
-                    <textarea id="editor" name="content"></textarea>
+                    <textarea id="editor" name="content">
+                        {!! $news->content !!}
+                    </textarea>
                 </div>
 
+                <script>
+                    ClassicEditor
+                        .create(document.querySelector('#editor'))
+                        .then(editor => {
+                            console.log(editor);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                </script>
 
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-primary" type="submit">
