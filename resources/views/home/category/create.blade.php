@@ -5,15 +5,15 @@
         <div class="card p-4">
             <h3>Create Category</h3>
 
-            @if ($errors)
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all( ) as $row)
-                            <li>{{ $row }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
             <form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -22,7 +22,7 @@
                     <label for="inputNanme4" class="form-label">Category Name</label>
                     <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }}">
                 </div>
-                
+
                 <div class="col-12">
                     <label for="inputImage" class="form-label">Category Image</label>
                     <input type="file" class="form-control" id="inputImage" name="image">

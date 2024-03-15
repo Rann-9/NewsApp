@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -132,7 +133,41 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'content' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg|max:5120' 
+        ]);
+
+        $news = News::findOrFail($id);
+        if ($request->file('image') == "") {
+            // update data
+            $news->update([
+                'title' => $request->title,
+                'slug' => Str::slug($request->category),
+                'category_id' => $request->category_id,
+                'content' => $request->content  
+            ]);
+        } else {
+            // hapus old image
+            Storage::disk('local')->delete('public/news' .basename($news->image));
+
+            // upload new image
+            $image = $request->file('image');
+            $image->storeAs('public/news', $image->hashName());
+
+            // update data
+            $news->update([
+                'title' => $request->title,
+                'category_id' => $request->category_id,
+                'slug' => Str::slug($request->category),
+                'image' => $image->hashName(),
+                'content' => $request->content
+            ]);
+        }
+
+        return redirect()->route('news.index');
     }
 
     /**
@@ -143,6 +178,13 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = News::findOrFail($id);
+
+        // delete image
+        Storage::disk('local')->delete('public/news' . basename($news->image));
+        // delete data
+        $news->delete();
+
+        return redirect()->route('news.index');
     }
 }

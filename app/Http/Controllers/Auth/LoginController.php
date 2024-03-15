@@ -25,6 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+    // ketika login berhasil, maka user akan diarahkan ke halaman welcome
     protected $redirectTo = '/home';
 
     /**

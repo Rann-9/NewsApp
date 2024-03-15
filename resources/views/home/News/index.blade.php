@@ -37,13 +37,17 @@
                                             </button>
                                         </a>
                                         <a href="{{ route('news.edit', $row->id) }}">
-                                            <button class="btn btn-warning">
+                                            <button class="btn btn-warning text-white">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
                                         </a>
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <form action="{{ route('news.destroy', $row->id) }}" method="post" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin Mau Dihapus?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty

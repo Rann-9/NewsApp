@@ -7,7 +7,7 @@
 
             @if (session('success'))
                 <div class="alert alert-success">
-                    {{ session('succes') }}
+                    {{ session('success') }}
                 </div>
             @endif
 
@@ -47,7 +47,7 @@
                                                 @include('home.category.includes.modal-show')
 
                                                 {{-- button edit with route category.edit {{ $row->id }} --}}
-                                                <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning"><i
+                                                <a href="{{ route('category.edit', $row->id) }}" class="btn btn-warning text-white"><i
                                                         class="bi bi-pencil-square"></i></a>
 
                                                 {{-- delete button with route category.destroy {{ row->id }} --}}

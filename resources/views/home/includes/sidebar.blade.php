@@ -7,7 +7,7 @@
         @if (Auth::user()->role == 'admin')
             {{-- Category & News --}}
             <li class="nav-item">
-                <a class="nav-link " href="{{ route('home') }}">
+                <a class="nav-link collapse" href="{{ route('home') }}">
                     <i class="bi bi-grid"></i>
                     <span>Home</span>
                 </a>
@@ -26,6 +26,13 @@
             <a class="nav-link " href="{{ route('news.index') }}">
                 <i class="bi bi-cast"></i>
                 <span>News</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link " href="{{ route('allUser') }}">
+                <i class="bi bi-file-person"></i>
+                <span>User</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
