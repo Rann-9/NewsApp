@@ -78,6 +78,7 @@
                     </div>
 
                     <div class="col-md-3">
+                        @foreach ($categoryNews as $row)
                         <div class="post-entry-1 border-bottom">
                             <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span>
                                 <span>Jul 5th '22</span>
@@ -86,6 +87,7 @@
                                     During Video Calls?</a></h2>
                             <span class="author mb-3 d-block">Jenny Wilson</span>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
