@@ -194,7 +194,7 @@ class AuthController extends Controller
         try {
             // validate
             $this->validate($request, [
-                'first_name' => 'required',
+                'first_name' => '',
                 'image' => 'image|mimes:jpeg,png,jpg|max:2048'
             ]);
 
