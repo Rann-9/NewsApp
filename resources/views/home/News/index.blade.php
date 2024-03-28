@@ -41,10 +41,12 @@
                                                 <i class="bi bi-pencil"></i>
                                             </button>
                                         </a>
-                                        <form action="{{ route('news.destroy', $row->id) }}" method="post" class="d-inline">
+                                        <form action="{{ route('news.destroy', $row->id) }}" method="post"
+                                            class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger" type="submit" onclick="return confirm('Yakin Mau Dihapus?')">
+                                            <button class="btn btn-danger" type="submit"
+                                                onclick="return confirm('Yakin Mau Dihapus?')">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
@@ -55,6 +57,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $news->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>

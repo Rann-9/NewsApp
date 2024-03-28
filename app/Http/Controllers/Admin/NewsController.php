@@ -137,7 +137,7 @@ class NewsController extends Controller
             'title' => 'required|max:255',
             'category_id' => 'required',
             'content' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg|max:5120' 
+            'image' => 'image|mimes:jpeg,png,jpg|max:5120'
         ]);
 
         $news = News::findOrFail($id);
@@ -145,7 +145,7 @@ class NewsController extends Controller
             // update data
             $news->update([
                 'title' => $request->title,
-                'slug' => Str::slug($request->category),
+                'slug' => Str::slug($request->title),
                 'category_id' => $request->category_id,
                 'content' => $request->content  
             ]);

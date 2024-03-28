@@ -169,8 +169,12 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="https://ui-avatars.com/api/color=fffff?name={{ Auth::user()->name }}" alt="Profile"
-                        class="rounded-circle">
+                    @if (empty(Auth::user()->profile->image))
+                        <img src="https://ui-avatars.com/api/color=fffff?name={{ Auth::user()->name }}"
+                            alt="Ini Istilah User" class="w-25">
+                    @else
+                        <img src="{{ Auth::user()->profile->image }}" alt="ini profile image">
+                    @endif
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
                 </a><!-- End Profile Iamge Icon -->
 

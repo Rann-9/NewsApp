@@ -5,7 +5,7 @@
         <div class="col-md-6 d-flex justify-content-center">
             @if (empty(Auth::user()->profile->image))
                 <img src="https://ui-avatars.com/api/color=fffff?name={{ Auth::user()->name }}" alt="Ini Istilah User"
-                    class="w-75">
+                    class="w-25">
             @else
                 <img src="{{ Auth::user()->profile->image }}" alt="ini profile image">
             @endif
